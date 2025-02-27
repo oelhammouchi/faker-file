@@ -70,12 +70,7 @@ class CloudStorage(BaseStorage):
         if not basename:
             basename = self.generate_basename(prefix)
 
-        return (
-            self.bucket
-            / self.root_path
-            / self.rel_path
-            / f"{basename}.{extension}"
-        )
+        return self.bucket / self.root_path / self.rel_path / f"{basename}.{extension}"
 
         # if basename:
         #     return (
@@ -103,13 +98,11 @@ class CloudStorage(BaseStorage):
         encoding: Optional[str] = None,
     ) -> int:
         """Write text."""
-        file = self.bucket / self.root_path / self.rel_path / filename
-        return file.write_text(data, encoding)
+        return filename.write_text(data, encoding)
 
     def write_bytes(self: "CloudStorage", filename: Pathy, data: bytes) -> int:
         """Write bytes."""
-        file = self.bucket / self.root_path / self.rel_path / filename
-        return file.write_bytes(data)
+        return filename.write_bytes(data)
 
     def exists(self: "CloudStorage", filename: Union[Pathy, str]) -> bool:
         """Check if file exists."""
